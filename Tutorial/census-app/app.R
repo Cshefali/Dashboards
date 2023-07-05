@@ -1,6 +1,6 @@
 #Shiny App for US 2010 Census data.
 #Author- Shefali C.
-#Date- July 4, 2023
+
 
 library(maps)
 library(mapproj)
