@@ -4,6 +4,7 @@
 
 library(shiny)
 library(tidyverse)
+library(DT)
 
 # working_dir <- paste0(getwd(),"/movies-database")
 # setwd(working_dir)
@@ -19,6 +20,11 @@ library(tidyverse)
 
 #load data.
 load("data/movies.Rdata")
+
+#select relevant columns for the data-table in dashboard.
+movies_table <- movies %>% 
+                  select(title, title_type, genre, runtime,
+                         mpaa_rating, studio, thtr_rel_date)
 
 ##USER INTERFACE
 ui <- fluidPage(
@@ -62,8 +68,8 @@ ui <- fluidPage(
             sliderInput(inputId = "size", label = "Size:",
                         min = 0, max = 5, value = 2, step = 1),
             
-            #Check box for showing/not showing data table
-            checkboxInput(inputId = "dtable", label = "Show data table",
+            #Check box for data table
+            checkboxInput(inputId = "show_table", label = "Show data table",
                           value = TRUE),
             
             #Text input to set the title of plot
@@ -89,7 +95,10 @@ ui <- fluidPage(
             #scatter plot
             plotOutput(outputId = "scatterplot"),
             textOutput(outputId = "text"),
-            dataTableOutput(outputId = "dtable")
+            br(),
+            DT::dataTableOutput(outputId = "dtable"),
+            br(),
+            DT::dataTableOutput(outputId = "static_table")
           )
         )
         
@@ -117,11 +126,11 @@ server <- function(input, output){
                      "Runtime" = movies$runtime)
     
     point_color <- switch (input$color,
-                    "Title Type" = movies$title_type, 
-                    "Genre" = movies$genre, 
-                    "MPAA Rating" = movies$mpaa_rating,
-                    "Critics Rating" = movies$critics_rating, 
-                    "Audience Rating" = movies$audience_rating)
+                           "Title Type" = movies$title_type, 
+                           "Genre" = movies$genre, 
+                           "MPAA Rating" = movies$mpaa_rating,
+                           "Critics Rating" = movies$critics_rating, 
+                           "Audience Rating" = movies$audience_rating)
     
     ggplot(data = movies, aes(x = data_x, y = data_y))+
       geom_point(aes(col = point_color), alpha = input$alpha)+
@@ -133,7 +142,18 @@ server <- function(input, output){
     paste("There are ", input$sample_size, " ", input$movie_type, " movies in this dataset.")
   })
   
-  output$dtable <- renderDataTable(expr = )
+  
+  output$dtable <- DT::renderDataTable(
+    if(input$show_table){
+      DT::datatable(data = movies_table %>% filter(title_type %in% input$movie_type),
+                    options = list(pageLength = 10))
+    }
+  )
+  
+  #Static table
+  output$static_table <- DT::renderDataTable(
+    DT::datatable(data = movies[1:3, 1:5])
+  )
 }
 
 #CALL TO SHINY APP
