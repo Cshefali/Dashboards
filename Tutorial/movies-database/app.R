@@ -28,6 +28,16 @@ movies_table <- movies %>%
 
 ##USER INTERFACE
 ui <- fluidPage(
+        tags$head(
+          tags$style(HTML("
+            .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+              padding: 8px;
+              line-height: 1.42857143;
+              vertical-align: top;
+              border-top: 2px solid black; 
+            }
+          "))
+        ),
         
         #title of the dashboard window
         titlePanel(title = "Movie browser"),
@@ -96,9 +106,16 @@ ui <- fluidPage(
             plotOutput(outputId = "scatterplot"),
             textOutput(outputId = "text"),
             br(),
+            h3(strong("Interactive table using DT package")),
             DT::dataTableOutput(outputId = "dtable"),
             br(),
-            DT::dataTableOutput(outputId = "static_table")
+            h3(strong("Static Table with some filter features using Shiny package")),
+            DT::dataTableOutput(outputId = "static_table"),
+            br(),
+            #adding a basic HTML table
+            h3(strong("Basic HTML table using Shiny package")),
+            h5(strong("#Editing in progress")),
+            shiny::tableOutput(outputId = "shiny_table")
           )
         )
         
@@ -146,13 +163,17 @@ server <- function(input, output){
   output$dtable <- DT::renderDataTable(
     if(input$show_table){
       DT::datatable(data = movies_table %>% filter(title_type %in% input$movie_type),
-                    options = list(pageLength = 10))
+                    options = list(pageLength = 5))
     }
   )
   
   #Static table
   output$static_table <- DT::renderDataTable(
     DT::datatable(data = movies[1:3, 1:5])
+  )
+  
+  output$shiny_table <- shiny::renderTable(
+    movies[1:3,1:4]
   )
 }
 
