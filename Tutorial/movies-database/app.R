@@ -2,6 +2,8 @@
 #Reference- https://shiny.posit.co/r/getstarted/build-an-app/hello-shiny/getting-started.html
 #Author - Shefali C.
 
+##Add CSS file to update the template of the dashboard
+
 library(shiny)
 library(tidyverse)
 library(DT)
