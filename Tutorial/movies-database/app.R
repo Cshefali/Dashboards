@@ -90,7 +90,7 @@ ui <- fluidPage(
             
             #Checkbox group for selecting movie type
             checkboxGroupInput(inputId = "movie_type", label = "Select movie type(s)",
-                               choices = list("Documentary", "Feature Film", "TV Movie"),
+                               choices = list("Documentaries", "Feature Films", "TV Movies"),
                                selected = "Feature Film"),
             
             #box for numeric input
@@ -158,13 +158,21 @@ server <- function(input, output){
   })
   
   output$text <- renderText({
+    if(length(input$movie_type) > 1){
+      paste("There are ", input$sample_size, " ", paste(input$movie_type, collapse = ", "), " movies in this dataset.")
+    }
+    else{
     paste("There are ", input$sample_size, " ", input$movie_type, " movies in this dataset.")
-  })
+    }
+    })#renderText
   
   
   output$dtable <- DT::renderDataTable(
+    data <- reactive({movies %>% sample_n(input$sample_size) %>% 
+              filter(title_type %in% input$movies_type)})
+    
     if(input$show_table){
-      DT::datatable(data = movies_table %>% filter(title_type %in% input$movie_type),
+      DT::datatable(data = data(),
                     options = list(pageLength = 5))
     }
   )
