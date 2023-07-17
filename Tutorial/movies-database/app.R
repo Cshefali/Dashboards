@@ -28,18 +28,22 @@ movies_table <- movies %>%
                   select(title, title_type, genre, runtime,
                          mpaa_rating, studio, thtr_rel_date)
 
+#add a new variable- summary score = audience score/critics score
+movies <- movies %>% 
+            mutate(score_ratio = audience_score/critics_score)
+
 ##USER INTERFACE
 ui <- fluidPage(
-        tags$head(
-          tags$style(HTML("
-            .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
-              padding: 8px;
-              line-height: 1.42857143;
-              vertical-align: top;
-              border-top: 2px solid black; 
-            }
-          "))
-        ),
+        # tags$head(
+        #   tags$style(HTML("
+        #     .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+        #       padding: 8px;
+        #       line-height: 1.42857143;
+        #       vertical-align: top;
+        #       border-top: 2px solid black; 
+        #     }
+        #   "))
+        # ),
         
         #title of the dashboard window
         titlePanel(title = "Movie browser"),
@@ -90,8 +94,9 @@ ui <- fluidPage(
             
             #Checkbox group for selecting movie type
             checkboxGroupInput(inputId = "movie_type", label = "Select movie type(s)",
-                               choices = list("Documentaries", "Feature Films", "TV Movies"),
-                               selected = "Feature Film"),
+                               #title_type variable is of type factor, hence levels() used.
+                               choices = levels(movies$title_type),
+                               selected = levels(movies$title_type)),
             
             #box for numeric input
             numericInput(inputId = "sample_size", label = "Sample size:",
@@ -105,9 +110,14 @@ ui <- fluidPage(
           #Main Panel
           mainPanel(
             #scatter plot
-            plotOutput(outputId = "scatterplot"),
+            #brushing allows user to create rectangle in the plot and drag it around
+            plotOutput(outputId = "scatterplot", brush = "plot_brush"),
             textOutput(outputId = "text"),
+            #state the correlation coeffcient between selected variables
+            #textOutput(outputId = "correlation"),
             br(),
+            #data table output for brushed area
+            dataTableOutput(outputId = "brush_table"),
             h3(strong("Interactive table using DT package")),
             DT::dataTableOutput(outputId = "dtable"),
             br(),
@@ -117,7 +127,10 @@ ui <- fluidPage(
             #adding a basic HTML table
             h3(strong("Basic HTML table using Shiny package")),
             h5(strong("#Editing in progress")),
-            shiny::tableOutput(outputId = "shiny_table")
+            shiny::tableOutput(outputId = "shiny_table"),
+            #Summary table
+            h3(strong("Summary Table")),
+            shiny::tableOutput(outputId = "sum_table")
           )
         )
         
@@ -167,15 +180,15 @@ server <- function(input, output){
     })#renderText
   
   
-  output$dtable <- DT::renderDataTable(
-    data <- reactive({movies %>% sample_n(input$sample_size) %>% 
-              filter(title_type %in% input$movies_type)})
-    
-    if(input$show_table){
-      DT::datatable(data = data(),
-                    options = list(pageLength = 5))
-    }
-  )
+  # output$dtable <- DT::renderDataTable(
+  #   data <- reactive({movies %>% sample_n(input$sample_size) %>% 
+  #             filter(title_type %in% input$movies_type)})
+  #   
+  #   if(input$show_table){
+  #     DT::datatable(data = data(),
+  #                   options = list(pageLength = 5))
+  #   }
+  # )
   
   #Static table
   output$static_table <- DT::renderDataTable(
@@ -185,6 +198,34 @@ server <- function(input, output){
   output$shiny_table <- shiny::renderTable(
     movies[1:3,1:4]
   )
+  
+  #Summary table
+  output$sum_table <- shiny::renderTable(
+    {
+    movies %>% filter(title_type %in% input$movie_type) %>% 
+      group_by(mpaa_rating) %>% 
+      summarize(mean_score_ratio = mean(score_ratio),
+                sd = sd(score_ratio),
+                n = n())
+    },
+    #this makes color of alternate rows different, white & grey
+    striped = T,
+    #set the height of the rows, 'l'-large, 's'-small
+    spacing = "l",
+    #left-right-center alignment of each value in the column 
+    align = "lccr",
+    #keep upto 4 decimal places
+    digits = 4,
+    #total width of the table
+    width = "50%",
+    caption = "Score ratio (audience / critics' scores) summary statistics by MPAA rating."
+  )
+  
+  #Correlation coefficient
+  # output$correlation <- renderTable({
+  #   cor_coeff <- round(cor(x = movies[,input$x], y = movies[,input$y], use = "pairwise"),3)
+  #   paste("Correlation = ", cor_coeff,"\n If correlation is closer to 1 or -1, relationship between the variables is linear.")
+  # })
 }
 
 #CALL TO SHINY APP
