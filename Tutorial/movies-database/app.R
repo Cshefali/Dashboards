@@ -54,6 +54,7 @@ ui <- fluidPage(
           sidebarPanel(
             #Drop-down selection for Y-axis variable
             selectInput(inputId = "y", label = "Y-axis:",
+                        
                         choices = list("IMDB rating",
                                        "IMDB number of votes",
                                        "Critics Score",
@@ -63,6 +64,7 @@ ui <- fluidPage(
             
             #Drop-down selection for X-axis variable
             selectInput(inputId = "x", label = "X-axis:",
+                        
                         choices = list("IMDB rating",
                                        "IMDB number of votes",
                                        "Critics Score",
@@ -149,7 +151,7 @@ server <- function(input, output){
                       "Audience Score" = movies$audience_score,
                       "Runtime" = movies$runtime
     )
-    
+
     data_y <- switch(input$y,
                      "IMDB rating" = movies$imdb_rating,
                      "IMDB number of votes" = movies$imdb_num_votes,
@@ -226,6 +228,13 @@ server <- function(input, output){
   #   cor_coeff <- round(cor(x = movies[,input$x], y = movies[,input$y], use = "pairwise"),3)
   #   paste("Correlation = ", cor_coeff,"\n If correlation is closer to 1 or -1, relationship between the variables is linear.")
   # })
+  
+  output$brush_table <- renderDataTable({
+    
+    
+    brushedPoints(df = movies, brush = input$plot_brush, xvar = input$x, yvar = input$y) %>% 
+      select(title, title_type, mpaa_rating)
+  })
 }
 
 #CALL TO SHINY APP
