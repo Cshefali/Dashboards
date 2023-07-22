@@ -13,3 +13,8 @@ library(palmerpenguins)
 #data
 penguins <- palmerpenguins::penguins
 
+#User INterface
+ui <- fluidPage(
+  
+)
+
