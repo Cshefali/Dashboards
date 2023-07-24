@@ -1,0 +1,7 @@
+1. Upon adding buttons in doms & extension argument, resulting app doesn't
+contain "Show xx entries" dropdown. How to get this back?
+
+2. When a row gets selected upon clicking, default selection color is navy blue.
+Change the color to some lighter shade of blue.
+
+3. I have skipped this for now, but check how to add tool-tip on the icons. Understand how to include image HTML element as a vector in the dataframe.
