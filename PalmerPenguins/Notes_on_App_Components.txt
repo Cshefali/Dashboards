@@ -1,0 +1,39 @@
+URLs for Help:
+
+1. Highlighted row color-
+#https://datatables.net/blog/2022-05-13#Row-colouring-improvements
+
+2. 
+
+
+
+
+
+
+*************************************************************************
+
+
+Components of the App-
+
+1. Download buttons for CSV and Excel file formats
+2. Remove the sorting arrows in column headers and place them somewhere else.
+3. Color the column header cells a shade dark, either grey or light blue.
+4. Keep rows all white.
+5. Make the horizontal line under column header dark.
+6. Give 2 options- 
+      i) all borders grey
+      ii) horizontal line below column header dark, rest horizontal lines grey.
+      no vertical lines. 
+      iii) give grey vertical lines but only inside table.
+      
+7. Adding search box below/above each column? filter = 'top' or filter = 'bottom'
+8. Change font of the text.
+9. A smooth, sliding look of the table.
+10. Wrap text inside column header & inside cells.
+11. Highlighting the search results?
+12. 2 options- 
+        1. adding Column visibility button
+        2. adding download, print button
+        
+13. The "Select page length" dropdown hides when buttons are added. How to bring it back?
+14. Change color of row selection from navy blue to lightblue
