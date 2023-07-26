@@ -1,9 +1,24 @@
 URLs for Help:
 
-1. Highlighted row color-
+1. DT package good explanation- https://rstudio.github.io/DT/
+
+2. Highlighted row color-
 #https://datatables.net/blog/2022-05-13#Row-colouring-improvements
 
-2. 
+3. Column reordering in datatable-
+
+a) https://stackoverflow.com/questions/65424976/r-shiny-getting-information-from-datatable-with-js-in-shiny
+
+b) https://stackoverflow.com/questions/50861746/colreorder-dt-extension-in-combination-with-shinyjqui
+
+
+4. JavaScript useful functions-
+https://legacy.datatables.net/usage/callbacks#:~:text=Callback%20that%20is%20called%20when,result%20of%20the%20loaded%20state.
+
+5. Useful Callbacks in DT
+https://laustep.github.io/stlahblog/posts/DTcallbacks.html#edit-columns-headers
+
+6. 
 
 
 
@@ -37,3 +52,4 @@ Components of the App-
         
 13. The "Select page length" dropdown hides when buttons are added. How to bring it back?
 14. Change color of row selection from navy blue to lightblue
+15. Keeping the sorting arrows in column headers or not? 
