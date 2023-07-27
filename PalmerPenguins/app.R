@@ -50,7 +50,8 @@ ui <- fluidPage(
     sidebarPanel(),
     mainPanel(
       h3("Palmer Penguins table using DT and Formattable packages"),
-      DT::dataTableOutput(outputId = "group_view")
+      div(DT::dataTableOutput(outputId = "group_view"), 
+          style = "font-size: 75%; width = 75%")
     )
   )
 )

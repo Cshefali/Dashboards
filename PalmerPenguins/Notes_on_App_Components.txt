@@ -21,7 +21,13 @@ https://laustep.github.io/stlahblog/posts/DTcallbacks.html#edit-columns-headers
 6. Making column headers border dark
 https://stackoverflow.com/questions/55170498/dt-r-shiny-add-header-border
 
-7. 
+7. DataTable Plugins (ScrollResize etc.)
+https://rstudio.github.io/DT/plugins.html
+
+8.DataTable Extensions 
+https://rstudio.github.io/DT/extensions.html
+
+9. 
 
 
 
@@ -69,4 +75,7 @@ Questions to find answers for:
 4. Upon fixing 1st column ('groupname' in NAIC project), the background color of the column header 'groupname' changes to white from grey.
 
 5. No gap between "Show 5 entries" dropdown and Download button in NAIC template dash.
-6. 
+
+6. Give 2 options-  
+  a) the table simply expands, contracts depending on "Select xx rows" dropdown, scrollY is disabled.  
+  b) ScrollY is enabled, but the pagelength is fixed. So, that when number of rows selected is say, 30, then scrollY appears and user can scroll down. (Instead of the table increasing its length and covering entire page.)
