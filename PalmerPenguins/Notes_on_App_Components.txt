@@ -63,3 +63,10 @@ Questions to find answers for:
 
 1. How to make column header borders dark? -- you have to use the callback jS func.
 2. How to place search box and show 10 entries etc. in the center?
+
+3. Look at png file- datatable_styling.png; how to keep table body in center and sort, search boxes at the end. i.e table body width is in the middle, rest all at the corners?
+
+4. Upon fixing 1st column ('groupname' in NAIC project), the background color of the column header 'groupname' changes to white from grey.
+
+5. No gap between "Show 5 entries" dropdown and Download button in NAIC template dash.
+6. 

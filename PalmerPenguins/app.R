@@ -88,7 +88,8 @@ server <- function(input, output){
                 #option for number of rows to display- 5, 10, 15 or 20 rows.
                 lengthMenu = c(5,10,15,20),
                 scrollX = TRUE,
-                scrollY = TRUE,
+                #scrollY is not a boolean argument. specify the fixed height of table
+                scrollY = "400px",
                 #keeping autowidth false solves the problem of 
                 #mis-aligned column header and table body
                 autoWidth = FALSE,
@@ -105,8 +106,7 @@ server <- function(input, output){
                                #button for column visibility; columns 1 and 2 fixed
                                list(extend = 'colvis',
                                     columns = 2:7)),
-                #Column visibility button
-                #buttons = I('colvis'),
+
                 #order the table in descending order of bill length
                 order = list(list(6,'desc')),
                 #highlight search results
