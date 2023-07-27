@@ -18,7 +18,10 @@ https://legacy.datatables.net/usage/callbacks#:~:text=Callback%20that%20is%20cal
 5. Useful Callbacks in DT
 https://laustep.github.io/stlahblog/posts/DTcallbacks.html#edit-columns-headers
 
-6. 
+6. Making column headers border dark
+https://stackoverflow.com/questions/55170498/dt-r-shiny-add-header-border
+
+7. 
 
 
 
@@ -53,3 +56,10 @@ Components of the App-
 13. The "Select page length" dropdown hides when buttons are added. How to bring it back?
 14. Change color of row selection from navy blue to lightblue
 15. Keeping the sorting arrows in column headers or not? 
+
+
+-------
+Questions to find answers for:
+
+1. How to make column header borders dark? -- you have to use the callback jS func.
+2. How to place search box and show 10 entries etc. in the center?
