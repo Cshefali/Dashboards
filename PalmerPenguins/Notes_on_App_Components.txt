@@ -27,7 +27,16 @@ https://rstudio.github.io/DT/plugins.html
 8.DataTable Extensions 
 https://rstudio.github.io/DT/extensions.html
 
-9. 
+9. Placing search box in center in DT Table
+https://stackoverflow.com/questions/72093301/position-dt-search-box-to-center-of-table
+
+10. Increase space between Show entries dropdown and Buttons
+https://stackoverflow.com/questions/72055583/adjust-place-of-downloading-buttons-of-a-dt-table-in-shiny
+
+11. Applying CSS to a single table
+https://stackoverflow.com/questions/75406546/apply-css-styling-to-a-single-dt-datatable
+
+12. 
 
 
 
