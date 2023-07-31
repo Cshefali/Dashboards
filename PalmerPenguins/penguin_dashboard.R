@@ -27,17 +27,17 @@ species_count_wide <- species_count %>%
               #substitue NA with 0
               values_fill = 0)
 
-gender_count <- penguins %>% 
+gender_count1 <- penguins %>% 
   group_by(island,sex) %>% 
   summarise(total = n())
 
 #gender count to wide form
-gender_count_wide <- gender_count %>% 
+gender_count1_wide <- gender_count1 %>% 
   pivot_wider(names_from = 'sex',
               values_from = 'total')
 
 #combining gender count & species count dataframes
-island_summary <- left_join(species_count_wide, gender_count_wide, by = 'island')
+island_summary <- left_join(species_count_wide, gender_count1_wide, by = 'island')
 
 ##AGGREGATE DATA PER SPECIES----
 
@@ -46,3 +46,22 @@ island_count <- penguins %>%
   summarise(total = n())
 
 #species per island count in wide format
+island_count_wide <- island_count %>% 
+  group_by(species, island) %>% 
+  summarise(total = n())
+
+#gender count per species
+gender_count2 <- penguins %>% 
+  group_by(species, sex) %>% 
+  summarise(total = n())
+
+#gender count 2 wide
+gender_count2_wide <- gender_count2 %>% 
+  pivot_wider(names_from = 'sex',
+              values_from = 'total')
+
+#summary statistics for each species
+species_summary <- penguins %>% 
+                    select(-c(sex, island, year)) %>% 
+                    group_by(species) %>% 
+                    summarize_at(vars())
