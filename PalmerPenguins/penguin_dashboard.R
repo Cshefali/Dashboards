@@ -68,7 +68,75 @@ species_summary <- left_join(island_count_wide, gender_count2_wide,
                              by = 'species')
 
 #summary statistics of body measurements for each species
-species_summary <- penguins %>% 
-                    select(-c(sex, island, year)) %>% 
-                    group_by(species) %>% 
-                    summarize_at(vars())
+species_aggregate <- penguins %>% 
+                      select(-c(sex, island, year)) %>% 
+                      group_by(species) %>% 
+                      summarize_at(vars(bill_length_mm,bill_depth_mm,
+                                        flipper_length_mm, body_mass_g),
+                                   list(m = mean))
+
+#renaming columns in species_aggregate
+colnames(species_aggregate) <- c("species", 
+                                 "mean bill length (mm)",
+                                 "mean bill depth (mm)", 
+                                 "mean flipper length (mm)",
+                                 "mean body mass (g)"
+                                 )
+
+#Shiny app
+
+#user interface
+ui <- fluidPage(
+  titlePanel(title = "Palmer Penguins Dashboard"),
+  navbarPage("Navbar!",
+             tabPanel("Plot",
+                      sidebarLayout(
+                        sidebarPanel(
+                          radioButtons("plotType", "Plot type",
+                                       c("Scatter"="p", "Line"="l")
+                          )
+                        ),
+                        mainPanel(
+                          plotOutput("plot")
+                        )#mainPanel
+                      )#sidebar layout
+             ),#tabpanel 1
+             tabPanel("Summary",
+                      verbatimTextOutput("summary")
+             ),#tabpanel 2
+             navbarMenu("More",
+                        tabPanel("Table",
+                                 DT::dataTableOutput("table")
+                        ),
+                        tabPanel("About",
+                                 fluidRow(
+                                   column(6,
+                                          includeMarkdown("about.md")
+                                   ),
+                                   column(3,
+                                          img(class="img-polaroid",
+                                              src=paste0("http://upload.wikimedia.org/",
+                                                         "wikipedia/commons/9/92/",
+                                                         "1919_Ford_Model_T_Highboy_Coupe.jpg")),
+                                          tags$small(
+                                            "Source: Photographed at the Bay State Antique ",
+                                            "Automobile Club's July 10, 2005 show at the ",
+                                            "Endicott Estate in Dedham, MA by ",
+                                            a(href="http://commons.wikimedia.org/wiki/User:Sfoskett",
+                                              "User:Sfoskett")
+                                          )
+                                   )
+                                 )
+                        )#last tabPanel
+             )#navbarMenu
+  )#Navbarpage
+)#fluidpage
+
+
+#server
+server <- function(input, output){
+  
+}
+
+#call to shiny App
+shinyApp(ui = ui, server = server)
