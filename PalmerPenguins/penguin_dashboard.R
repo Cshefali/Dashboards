@@ -1,3 +1,7 @@
+#Main penguin dashboard
+#Author- Shefali C.
+#Last Updated- August 4, 2023
+
 library(tidyverse)
 library(palmerpenguins)
 library(shiny)
