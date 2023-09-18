@@ -1,6 +1,6 @@
 #Dashboard for Palmer penguins
 #Author- Shefali C.
-#Last Update- July 26, 2023
+#Last Update- September 16, 2023
 
 ##Blog Help- https://clarewest.github.io/blog/post/making-tables-shiny/
 ##Font-awesome icon library Help:
@@ -90,7 +90,7 @@ server <- function(input, output){
                 #function to change color of the column header
                 initComplete = JS(
                   "function(settings, json) {",
-                  "$(this.api().table().header()).css({'background-color': '#fff', 'color': '#000'});",
+                  "$(this.api().table().header()).css({'background-color': 'pink', 'color': '#000'});",
                   "}"),
                 #change bill_depth row to currency format.
                 rowCallback = JS(
@@ -142,7 +142,7 @@ server <- function(input, output){
                 #fix the column headers when scrolling down
                 fixedHeader = TRUE,
                 #enable moving around cells using keys
-                keys = TRUE,
+                keys = F,
                 #Remove the sorting arrows--Does not work, both
                 #ordering = F,
                 #bSort = F,
@@ -237,7 +237,7 @@ server <- function(input, output){
                 #fix the column headers when scrolling down
                 fixedHeader = TRUE,
                 #enable moving around cells using keys
-                keys = TRUE,
+                keys = F,
                 #Remove the sorting arrows--Does not work, both
                 #ordering = F,
                 #bSort = F,

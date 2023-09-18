@@ -1,6 +1,6 @@
 #Main penguin dashboard
 #Author- Shefali C.
-#Last Updated- August 4, 2023
+#Last Updated- September 16, 2023
 
 library(tidyverse)
 library(palmerpenguins)
@@ -41,8 +41,10 @@ gender_count1_wide <- gender_count1 %>%
   pivot_wider(names_from = 'sex',
               values_from = 'total')
 
+#------REMOVE THIS PART--------
 #combining gender count & species count dataframes
-island_summary <- left_join(species_count_wide, gender_count1_wide, by = 'island')
+#island_summary <- left_join(species_count_wide, gender_count1_wide, by = 'island')
+#--------------------------
 
 ##AGGREGATE DATA PER SPECIES----
 
